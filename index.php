@@ -3,7 +3,7 @@ $is_auth = rand(0, 1);
 
 $user_name = 'Alina'; // укажите здесь ваше имя
 $categories =  ["Доски и лыжи", "Крепления", "Ботинки", "Одежда", "Инструменты", "Разное"];
-$items = [
+$lots = [
     [
         'name' => '2014 Rossignol District Snowboard',
         'category'=> $categories[0],
@@ -94,9 +94,9 @@ $items = [
         <p class="promo__text">На нашем интернет-аукционе ты найдёшь самое эксклюзивное сноубордическое и горнолыжное снаряжение.</p>
         <ul class="promo__list">
             <!--заполните этот список из массива категорий-->
-            <?php foreach ($categories as $index => $value): ?>
+            <?php foreach ($categories as $category): ?>
                 <li class="promo__item promo__item--boards">
-                    <a class="promo__link" href="pages/all-lots.html"><?=$value;?></a>
+                    <a class="promo__link" href="pages/all-lots.html"><?=$category;?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
@@ -107,18 +107,18 @@ $items = [
         </div>
         <ul class="lots__list">
             <!--заполните этот список из массива с товарами-->
-            <?php foreach ($items as $key => $value): ?>
+            <?php foreach ($lots as $lot): ?>
                 <li class="lots__item lot">
                     <div class="lot__image">
-                        <img src="<?=$value['image']; ?>" width="350" height="260" alt="<?=$value['name']; ?>">
+                        <img src="<?=$lot['image']; ?>" width="350" height="260" alt="<?=$lot['name']; ?>">
                     </div>
                 <div class="lot__info">
-                    <span class="lot__category"><?=$value['category']; ?></span>
-                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$value['name']; ?></a></h3>
+                    <span class="lot__category"><?=$lot['category']; ?></span>
+                    <h3 class="lot__title"><a class="text-link" href="pages/lot.html"><?=$lot['name']; ?></a></h3>
                     <div class="lot__state">
                         <div class="lot__rate">
                             <span class="lot__amount">Стартовая цена</span>
-                            <span class="lot__cost"><?=$value['price']; ?><b class="rub">р</b></span>
+                            <span class="lot__cost"><?=$lot['price']; ?><b class="rub">р</b></span>
                         </div>
                         <div class="lot__timer timer">
                             12:23
@@ -136,9 +136,9 @@ $items = [
     <nav class="nav">
         <ul class="nav__list container">
             <!--заполните этот список из массива категорий-->
-            <?php foreach ($categories as $key => $value): ?>
+            <?php foreach ($categories as $category): ?>
                 <li class="nav__item">
-                    <a href="pages/all-lots.html"><?=$value;?></a>
+                    <a href="pages/all-lots.html"><?=$category;?></a>
                 </li>
             <?php endforeach; ?>
         </ul>
