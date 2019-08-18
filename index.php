@@ -4,7 +4,7 @@
 
     $content = include_template('main.php', [
         'categories' => $categories,
-        'lots' => $lots
+        'lots' => $lots,
     ]);
 
     $layout_content = include_template('layout.php', [
@@ -16,3 +16,4 @@
     ]);
 
     print($layout_content);
+?>
