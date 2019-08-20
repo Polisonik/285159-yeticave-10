@@ -9,14 +9,14 @@ $lots = [
         'category'=> $categories[0],
         'price' => 10999,
         'image' => 'img/lot-1.jpg',
-        'final_date' => '2019-08-21'
+        'final_date' => '2019-08-22'
     ],
     [
         'name' => 'DC Ply Mens 2016/2017 Snowboard',
         'category'=> $categories[0],
         'price' => 159999,
         'image' => 'img/lot-2.jpg',
-        'final_date' => '2019-08-20'
+        'final_date' => '2019-08-23'
     ],
     [
         'name' => 'Крепления Union Contact Pro 2015 года размер L/XL',
