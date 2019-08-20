@@ -22,3 +22,23 @@ function format_price ($price) {
   $price = number_format($price, null, null, ' ') . ' <b class="rub">р</b>';
   return $price;
 };
+
+function get_dt_range($final_date) {
+
+    $dt_now = date_create('now');
+    $dt_end = date_create($final_date);
+
+    if ( $dt_now >= $dt_end) {
+        return [
+            'hours' => '00',
+            'minutes' => '00'
+        ];
+    };
+
+    $dt_diff = date_diff($dt_end, $dt_now);
+
+    return [
+       'hours' => date_interval_format($dt_diff, '%a') * 24 + date_interval_format($dt_diff, '%H'),
+       'minutes' => date_interval_format($dt_diff, '%I')
+    ];
+}
