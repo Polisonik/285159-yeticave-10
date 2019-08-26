@@ -6,17 +6,17 @@ USE yeticave;
 
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name CHAR(128) NOT NULL UNIQUE,
-    code CHAR(64)
+    name VARCHAR NOT NULL UNIQUE,
+    code VARCHAR
 );
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    data_registration TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    email  CHAR(128) NOT NULL UNIQUE,
+    creation_time DATETIME DEFAULT CURRENT_TIMESTAMP,
+    email  VARCHAR NOT NULL UNIQUE,
     name CHAR(64) NOT NULL,
     password CHAR(64) NOT NULL,
-    contacts CHAR(255) NOT NULL
+    contacts VARCHAR NOT NULL
 );
 
 CREATE TABLE lots (
