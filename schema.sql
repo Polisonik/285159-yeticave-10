@@ -41,6 +41,5 @@ CREATE TABLE bid (
     lot_id INT NOT NULL
 );
 
-CREATE UNIQUE INDEX category_name ON categories(name);
 CREATE INDEX lot ON lots(name);
 
