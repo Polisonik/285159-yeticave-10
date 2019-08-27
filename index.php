@@ -19,4 +19,3 @@
     ]);
 
     print($layout_content);
-?>

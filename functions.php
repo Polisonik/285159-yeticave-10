@@ -17,7 +17,16 @@ function include_template($name, array $data = []) {
     return $result;
 }
 
-function format_price ($price) {
+/**
+ * Форматирует цену
+ *
+ * @param int $price цена
+
+ *
+ * @return string отформатированная цена
+ */
+function format_price (int $price): string
+{
   $price = ceil($price);
   $price = number_format($price, null, null, ' ') . ' <b class="rub">р</b>';
   return $price;

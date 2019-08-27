@@ -6,9 +6,10 @@ USE yeticave;
 
 CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(64) NOT NULL UNIQUE,
-    code VARCHAR(64)
-);
+    name VARCHAR(64) NOT NULL,
+    code VARCHAR(64) NOT NULL
+
+CREATE UNIQUE INDEX name_udx ON categories(name);
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -19,11 +20,13 @@ CREATE TABLE users (
     contacts VARCHAR(255) NOT NULL
 );
 
+CREATE INDEX name_idx ON users(name);
+
 CREATE TABLE lots (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(128) NOT NULL,
     creation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    end_time DATETIME NOT NULL DEFAULT  CURRENT_TIMESTAMP,
+    end_time DATETIME NOT NULL,
     description TEXT,
     image_link VARCHAR(128),
     starting_price INT UNSIGNED NOT NULL,
@@ -42,4 +45,3 @@ CREATE TABLE bid (
 );
 
 CREATE INDEX lot ON lots(name);
-
