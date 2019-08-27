@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS yeticave;
+
 CREATE DATABASE yeticave
     DEFAULT CHARACTER SET utf8
     DEFAULT COLLATE UTF8_GENERAL_CI;
@@ -8,6 +10,7 @@ CREATE TABLE categories (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     code VARCHAR(64) NOT NULL
+);
 
 CREATE UNIQUE INDEX name_udx ON categories(name);
 
@@ -36,12 +39,14 @@ CREATE TABLE lots (
     category_id INT NOT NULL
 );
 
+ALTER TABLE lots
+    ADD FOREIGN KEY (category_id)
+        REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
 CREATE TABLE bid (
     id INT AUTO_INCREMENT PRIMARY KEY,
     creation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    value INT NOT NULL,
+    amount INT NOT NULL,
     user_id INT NOT NULL,
     lot_id INT NOT NULL
 );
-
-CREATE INDEX lot ON lots(name);

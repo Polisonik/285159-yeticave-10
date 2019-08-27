@@ -32,8 +32,16 @@ function format_price (int $price): string
   return $price;
 };
 
-function get_dt_range($final_date) {
+/**
+ * Сохраняет отедльно количество часов и минут до снятия лота с аукциона
+ *
+ * @param int $final_date дата завершения действия объявления
 
+ *
+ * @return array количество часов, количество минут.
+ */
+function get_time_before(string $final_date): array
+{
     $dt_now = date_create('now');
     $dt_end = date_create($final_date);
 

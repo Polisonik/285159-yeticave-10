@@ -29,7 +29,6 @@
                             </div>
                             <?php
                                 $time_before = get_time_before($lot['final_date']);
-
                             ?>
                             <div class="lot__timer timer <?php if ($time_before['hours'] < 1): ?> timer--finishing <?php endif; ?>">
                                 <?=$time_before['hours'] . ":" . $time_before['minutes']; ?>
