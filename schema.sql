@@ -7,7 +7,7 @@ CREATE DATABASE yeticave
 USE yeticave;
 
 CREATE TABLE categories (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(64) NOT NULL,
     code VARCHAR(64) NOT NULL
 );
@@ -15,18 +15,20 @@ CREATE TABLE categories (
 CREATE UNIQUE INDEX name_udx ON categories(name);
 
 CREATE TABLE users (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     creation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    email  VARCHAR(128) NOT NULL UNIQUE,
+    email  VARCHAR(128) NOT NULL,
     name VARCHAR(64) NOT NULL,
     password VARCHAR(64) NOT NULL,
     contacts VARCHAR(255) NOT NULL
 );
 
+CREATE UNIQUE INDEX email_udx ON users(email);
+
 CREATE INDEX name_idx ON users(name);
 
 CREATE TABLE lots (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(128) NOT NULL,
     creation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     end_time DATETIME NOT NULL,
@@ -34,19 +36,41 @@ CREATE TABLE lots (
     image_link VARCHAR(128),
     starting_price INT UNSIGNED NOT NULL,
     step_bid INT UNSIGNED NOT NULL,
-    user_id INT NOT NULL,
-    winner_id INT,
-    category_id INT NOT NULL
+    user_id INT UNSIGNED NOT NULL,
+    winner_id INT UNSIGNED,
+    category_id INT UNSIGNED NOT NULL
 );
+
+CREATE INDEX name_idx ON lots(name);
+CREATE INDEX creation_time_idx ON lots(creation_time);
 
 ALTER TABLE lots
     ADD FOREIGN KEY (category_id)
         REFERENCES categories (id) ON DELETE CASCADE ON UPDATE CASCADE;
 
-CREATE TABLE bid (
+ALTER TABLE lots
+    ADD FOREIGN KEY (user_id)
+        REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE lots
+    ADD FOREIGN KEY (winner_id)
+        REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+CREATE TABLE bids (
     id INT AUTO_INCREMENT PRIMARY KEY,
     creation_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    amount INT NOT NULL,
-    user_id INT NOT NULL,
-    lot_id INT NOT NULL
+    amount INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    lot_id INT UNSIGNED NOT NULL
 );
+
+CREATE INDEX creation_time_idx ON bids(creation_time);
+
+ALTER TABLE bids
+    ADD FOREIGN KEY (user_id)
+        REFERENCES users (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
+ALTER TABLE bids
+    ADD FOREIGN KEY (lot_id)
+        REFERENCES lots (id) ON DELETE CASCADE ON UPDATE CASCADE;
+
