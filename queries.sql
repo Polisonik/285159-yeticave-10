@@ -35,10 +35,8 @@ INSERT INTO lots
 SET name = 'Маска Oakley Canopy', creation_time = '2019-08-19 21:15:01', end_time = '2019-09-07', description='', image_link='img/lot-6.jpg', starting_price = 5400, step_bid = 5, user_id = 2, category_id = 5;
 
 /* Заполнение таблицы bids */
-INSERT INTO bids
-SET creation_time = '2019-08-29 12:10:10', amount = 11200, user_id = 2, lot_id = 1;
-INSERT INTO bids
-SET creation_time = '2019-08-30 07:15:05', amount = 11500, user_id = 2, lot_id = 1;
+INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
+VALUES (11500, 2, 1), (11200, 2, 1);
 
 /*Вывод всех категорий */
 SELECT * FROM categories;
