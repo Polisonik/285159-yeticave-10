@@ -37,19 +37,26 @@ SET name = 'Маска Oakley Canopy', creation_time = '2019-08-19 21:15:01', en
 /* Заполнение таблицы bids */
 INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
 VALUES (11500, 2, 1), (11200, 2, 1);
+INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
+VALUES (9000, 2, 3), (10000, 1, 3);
+INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
+VALUES (8000, 2, 6), (8000, 1, 6);
 
 /*Вывод всех категорий */
 SELECT * FROM categories;
 
 /*Вывод новых, открытых лотов. */
-SELECT l.name, creation_time, starting_price, image_link, c.name
+SELECT l.id, l.name, l.creation_time, starting_price, b.price, image_link, c.name
 FROM lots l
 JOIN categories c ON l.category_id = c.id
+LEFT JOIN (SELECT max(creation_time), lot_id, max(amount) AS price
+    FROM bids
+    GROUP BY lot_id) b ON b.lot_id = l.id
 WHERE end_time > now()
 ORDER BY creation_time DESC;
 
 /* показать лот по его id */
-SELECT l.name, l.creation_time, starting_price, image_link, c.name, u.name, email
+SELECT l.id, l.name, l.creation_time, starting_price, image_link, c.name, u.name, email
 FROM lots l
 JOIN categories c ON l.category_id = c.id
 join users u ON l.user_id = u.id
@@ -62,7 +69,7 @@ Where id = 5;
 
 
 /* получение списка ставок для лота по его идентификатору с сортировкой по дате */
-SELECT b.creation_time, u.name, u.email, l.name, amount
+SELECT b.id, b.creation_time, u.name, u.email, l.name, amount
 FROM bids b
 JOIN users u ON b.user_id = u.id
 JOIN lots l ON b.lot_id = l.id
