@@ -1,5 +1,4 @@
-/* Добавление значений в таблицу categories */
-INSERT INTO categories
+/* Добавление значений в таблицу categories */INSERT INTO categories
 SET name = 'Доски и лыжи', code = 'boards';
 INSERT INTO categories
 SET name = 'Крепления', code = 'attachment';
@@ -35,28 +34,23 @@ INSERT INTO lots
 SET name = 'Маска Oakley Canopy', creation_time = '2019-08-19 21:15:01', end_time = '2019-09-07', description='', image_link='img/lot-6.jpg', starting_price = 5400, step_bid = 5, user_id = 2, category_id = 5;
 
 /* Заполнение таблицы bids */
-INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
-VALUES (11500, 2, 1), (11200, 2, 1);
-INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
-VALUES (9000, 2, 3), (10000, 1, 3);
-INSERT INTO `bids` (`amount`, `user_id`, `lot_id`)
-VALUES (8000, 2, 6), (8000, 1, 6);
+INSERT INTO bids (amount, user_id, lot_id)
+VALUES (11100, 2, 1), (11300, 2, 1);
+
 
 /*Вывод всех категорий */
 SELECT * FROM categories;
 
 /*Вывод новых, открытых лотов. */
-SELECT l.id, l.name, l.creation_time, starting_price, b.price, image_link, c.name
+SELECT l.id, l.name, l.creation_time, starting_price, image_link, c.name,
+(SELECT amount FROM bids WHERE lot_id = l.id ORDER BY id DESC LIMIT 1) amount
 FROM lots l
 JOIN categories c ON l.category_id = c.id
-LEFT JOIN (SELECT max(creation_time), lot_id, max(amount) AS price
-    FROM bids
-    GROUP BY lot_id) b ON b.lot_id = l.id
 WHERE end_time > now()
 ORDER BY creation_time DESC;
 
 /* показать лот по его id */
-SELECT l.id, l.name, l.creation_time, starting_price, image_link, c.name, u.name, email
+SELECT l.id, l.name, l.creation_time, starting_price, image_link, c.name AS category_name, u.name AS user_name, email
 FROM lots l
 JOIN categories c ON l.category_id = c.id
 join users u ON l.user_id = u.id
@@ -69,7 +63,7 @@ Where id = 5;
 
 
 /* получение списка ставок для лота по его идентификатору с сортировкой по дате */
-SELECT b.id, b.creation_time, u.name, u.email, l.name, amount
+SELECT b.id, b.creation_time, u.name AS user_name, u.email, l.name AS lot_name, amount
 FROM bids b
 JOIN users u ON b.user_id = u.id
 JOIN lots l ON b.lot_id = l.id
