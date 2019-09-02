@@ -3,7 +3,7 @@
     setlocale(LC_TIME, 'ru_Ru');
     require_once('init.php');
     require_once('functions.php');
-    //require_once('data.php');
+
 
 
     if (!$connection) {
