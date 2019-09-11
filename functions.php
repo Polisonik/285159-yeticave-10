@@ -74,7 +74,7 @@ function db_connect(array $config) {
 */
 function get_active_lots($connection) {
     $data = [];
-    $query_lots = 'SELECT l.id, l.nam, l.creation_time, starting_price, image_link, end_time, c.name AS category_name,'
+    $query_lots = 'SELECT l.id, l.name, l.creation_time, starting_price, image_link, end_time, c.name AS category_name,'
         .' (SELECT amount FROM bids WHERE lot_id = l.id ORDER BY id DESC LIMIT 1) amount'
         .' FROM lots l'
         .' JOIN categories c ON l.category_id = c.id'
@@ -96,7 +96,9 @@ function get_categories($connection) {
 
     if ($result) {
         $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        return $data;
     }
-    return $data;
+
+
 };
 
