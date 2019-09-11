@@ -59,3 +59,44 @@ function get_time_before(string $final_date): array
        'minutes' => date_interval_format($dt_diff, '%I')
     ];
 }
+
+/**
+*Подключение к базе
+*@param array $config['db'] данные по
+*/
+function db_connect(array $config) {
+    return mysqli_connect($config['db']['host'], $config['db']['user'], $config['db']['password'], $config['db']['database']);
+}
+
+/**
+* Получение списка активных лотов
+*@param
+*/
+function get_active_lots($connection) {
+    $data = [];
+    $query_lots = 'SELECT l.id, l.nam, l.creation_time, starting_price, image_link, end_time, c.name AS category_name,'
+        .' (SELECT amount FROM bids WHERE lot_id = l.id ORDER BY id DESC LIMIT 1) amount'
+        .' FROM lots l'
+        .' JOIN categories c ON l.category_id = c.id'
+        .' WHERE end_time > now()'
+        .' ORDER BY creation_time DESC';
+
+    $result = mysqli_query($connection,  $query_lots);
+
+    if ($result) {
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+    return $data;
+};
+
+function get_categories($connection) {
+    $data = [];
+    $query_categories = 'SELECT name, code FROM categories';
+    $result = mysqli_query($connection, $query_categories);
+
+    if ($result) {
+        $data = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    }
+    return $data;
+};
+
